@@ -50,4 +50,4 @@
 * Instance and job are two labels assigned to every metric by default.
 * For useful SLIs, you want to find metrics that accurately measure a user’s experience. So things like high CPU, memory, and disk utilization would make for poor SLIs, as a user may not experience any degradation of service during these events.
 * Logging, metrics and tracing are the 3 components of observability.
-* 
+* teste
