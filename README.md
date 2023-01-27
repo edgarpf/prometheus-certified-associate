@@ -50,3 +50,17 @@
 * Instance and job are two labels assigned to every metric by default.
 * For useful SLIs, you want to find metrics that accurately measure a user’s experience. So things like high CPU, memory, and disk utilization would make for poor SLIs, as a user may not experience any degradation of service during these events.
 * Logging, metrics and tracing are the 3 components of observability.
+* The `metrics_path` property can be updated with a path different from the default.
+* The **group_interval** property determines how long alertmanager will wait after sending a notification, before it sends a new notification for a group.
+* When an alert arrives on alertmanager, alertmanager will wait the amount of time specified on `group_wait`, to wait for other alerts to arrive before firing off a notification.
+* The default delimiter is `;`.
+* Prometheus provides a functional query language called PromQL.
+* The time unit for hours is just `h` not `hr`.
+* Alert rules are defined on the prometheus server in a separate rules file.
+* 64 bits float is the data type do Prometheus metric values use.
+* The `up` query will return a `1` if a target is able to be successfully scraped and a `0` if it is not.
+* Groups are run in parallel and rules within a group are run in sequentially.
+* Prometheus client libraries allow you to instrument applications.
+* The two types of attributes metrics can have are: help - description of what the metric is type - specifies what type of metric(counter, gauge, histogram, summary).
+* scheme field will alllow prometheus using http or https.
+* 
