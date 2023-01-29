@@ -63,4 +63,32 @@
 * Prometheus client libraries allow you to instrument applications.
 * The two types of attributes metrics can have are: help - description of what the metric is type - specifies what type of metric(counter, gauge, histogram, summary).
 * scheme field will alllow prometheus using http or https.
-* 
+* group_by: ['...'] is used to effectively disable grouping of alerts for a particular Alertmanager route.
+* avg_over_time(up[5m]) contains temporal aggregations are time-based.
+* Include a version label on all exported metrics is not a best practice as it is recommend to use a designated build_info metric with a version label and dynamically attach it via PromQL grouping as-needed.
+* A numeric measuremen is the definition of a metric.
+* **relabel_configs** with action keep will drop all targets that do not match the regular expression and keep the ones that do.
+* While Prometheus exposes the synthetic ALERTS  time series based on the alerts it evaluates, the only way to get the currently firing alerts in Alertmanager is via the Alertmanager API, not PromQL.
+* Prometheus label values may contain any Unicode characters, including numbers and underscores. Additionally, unlike label names, there is no restriction that label values cannot start with a number.
+* For each instance scrape, Prometheus stores a sample in the following time series:
+  * up{job="<job-name>", instance="<instance-id>"}: 1 if the instance is healthy, i.e. reachable, or 0 if the scrape failed.
+  * scrape_duration_seconds{job="<job-name>", instance="<instance-id>"}: duration of the scrape.
+  * scrape_samples_post_metric_relabeling{job="<job-name>", instance="<instance-id>"}: the number of samples remaining after metric relabeling was applied.
+  * scrape_samples_scraped{job="<job-name>", instance="<instance-id>"}: the number of samples the target exposed.
+  * scrape_series_added{job="<job-name>", instance="<instance-id>"}: the approximate number of new series in this scrape. New in v2.10
+* span is a call or logical section within a larger transaction detailing response time, status code and other metadata about the call
+* Log is a textual representation of an event, commonly structured with key-value-based metadata.
+* While Alertmanager integrates with some notification providers that can send text notifications, Alertmanager itself cannot directly generate text message notifications.
+* The rate function should only be used with counters, not gauges.
+* Sending a SIGHUP to the Prometheus process to trigger a Prometheus configuration reload,
+* The offset modifier must be directly applied to a selector, not to the result of a function or aggregation.
+* Metrics registry is a set of metrics in an instrumented application that will be returned when scraped.
+* ec2_sd_configs can be used in AWS.
+* SLA > SLO > SLI.
+* kubernetes_sd_configs is BEST for identifying Kubernetes pods to scrape.
+* Prometheus recording rules evaluates a PromQL expression and save the result back to the TSDB as a new metric.
+* Inhibiting is a policy that when one type of alert fires, notifications should not be sent for a certain different type of alert.
+* Globally via command line flags is Prometheus data retention configured.
+* target and module must be specified as part of a Blackbox Exporter probe.
+* Summary metrics generally cannot be aggregated.
+* SNMP Exporter is ideal for monitoring network devices.
