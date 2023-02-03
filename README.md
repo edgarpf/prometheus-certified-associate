@@ -92,3 +92,43 @@
 * target and module must be specified as part of a Blackbox Exporter probe.
 * Summary metrics generally cannot be aggregated.
 * SNMP Exporter is ideal for monitoring network devices.
+* increase operates on counter metrics while delta operates on gauge metrics.
+* Error budget is the maximum time a system can be down without violating an SLO or SLA.
+* Prometheus remote writing is the ability for Prometheus to stream samples to an endpoint.
+* The sum and count aggregations drop the metric name from the result.
+* Addition (+) can be used with either counters or gauges.
+* JMX Exporter is BEST for monitoring Java Virtual Machine (JVM) metrics.
+* static_configs * requires manually setting each scrape target.
+* Unlike other monitoring software like statsd, Prometheus does not "namespace" metrics using dots.
+* http is the networking scheme Prometheus use by default for scrapes.
+* Status is a user interface tab allows viewing the configured service discovery as well as discovered targets.
+* Heamap is the MOST appropriate for displaying the bucket values of a histogram over time in Grafana.
+* Grafana only queries the data that already exists so scrape timeout would have no meaning in that context.
+* relabel_configs can be used to apply metadata exposed via the various Prometheus service discovery methods as labels on scraped targets.
+* Prometheus does not recommend or support Network File System (NFS) usage for Prometheus storage.
+* An exemplar is a reference to some external data associated with a time series, commonly a trace.
+* scrape_timeout defines how long to wait for a response before giving up on a scrape.
+* Aler rules are defined in designated files, referenced by the Prometheus configuration file.
+* Set the --web.enable-lifecycle command line flag to be able to reload Prometheus via its /-/reload endpoint.
+* Summary is samples numerical observations and calculates configurable quantiles over a sliding time window.
+* SMTP is the Simple Mail Transfer Protocol and has no role in Prometheus scrapes.
+* As a best practice, alerting should be done on symptoms, not causes.
+* promtool test rules can be used for unit testing Prometheus rules.
+* deriv operates on gauge metrics while rate operates on counter metrics” is the correct answer.
+* Error budget policy is a set of actions to be taken when an SLO or SLA has been breached
+* Prometheus data model consist of metrics names, metric labels and samples.
+* Months are not allowed for use in range selectors as they vary in the number of days they contain.
+* predict_linear can be used to forecast the future value of a time series.
+* a vector matching must contain the keywords on or ignoring.
+* Blackbox Exporter is BEST for monitoring an HTTP web server endpoint to ensure that it returns a 200 status code.
+* The idelta function is only appropriate for use with gauge metrics.
+* Prometheus  is responsible for evaluating alerting rules.
+* The Agent mode of Prometheus disables querying, alerting and local storage whereas the normal mode of Prometheus has each of these enabled.
+* Metric type, help text, one or more samples are the three principal components of the Prometheus exposition format.
+* Status is the user interface tab allows for viewing the current configuration of Prometheus.
+* absent returns a result of 1 if the specified time series does not exist.
+* A scrape instance is a single target within a scrape job.
+* 9093 is the default web port of Alertmanager.
+* Prometheus instrumentation is writing application code to expose desired aspects of the app as Prometheus metrics.
+* The delta function considers the entire range interval while the idelta function only considers the last two samples in the interval.
+* 
