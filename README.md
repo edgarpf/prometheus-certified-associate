@@ -131,4 +131,18 @@
 * 9093 is the default web port of Alertmanager.
 * Prometheus instrumentation is writing application code to expose desired aspects of the app as Prometheus metrics.
 * The delta function considers the entire range interval while the idelta function only considers the last two samples in the interval.
-* 
+* histogram_quantile yields the φ-quantile of a histogram.
+* Module  is the name of an individual Blackbox Exporter probe configuration.
+* Left and right single or double quotes are not valid in PromQL.
+* promtool check config can be used to check the validity of the Prometheus configuration file.
+* for specify how long the expression must be true before an alert is fired.
+* **X-Prometheus-Scrape-Timeout-Seconds** is an HTTP header set by Prometheus on each scrape.
+* You want to ensure that the API is served using HTTPS and that the returned status code is in the range 200-299:
+  ```yaml
+  prober: http
+  http:
+    valid_status_codes: 2xx
+    fail_if_not_ssl: true
+  ```
+* **ALERTS{alertstate="firing"}** will return the currently firing alerts in Prometheus.
+* file is service discovery method, the MOST generic.
