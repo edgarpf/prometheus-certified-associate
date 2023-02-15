@@ -146,3 +146,109 @@
   ```
 * **ALERTS{alertstate="firing"}** will return the currently firing alerts in Prometheus.
 * file is service discovery method, the MOST generic.
+* Do not use labels to store dimensions with high cardinality (many different label values), such as user IDs, email addresses, or other unbounded sets of values.
+* A counter is a cumulative metric that represents a single monotonically increasing counter whose value can only increase or be reset to zero on restart. For example, you can use a counter to represent the number of requests served, tasks completed, or errors.
+Do not use a counter to expose a value that can decrease. For example, do not use a counter for the number of currently running processes; instead use a gauge.
+* A gauge is a metric that represents a single numerical value that can arbitrarily go up and down.
+Gauges are typically used for measured values like temperatures or current memory usage, but also "counts" that can go up and down, like the number of concurrent requests.
+* A histogram samples observations (usually things like request durations or response sizes) and counts them in configurable buckets. It also provides a sum of all observed values.
+* Similar to a histogram, a summary samples observations (usually things like request durations and response sizes). While it also provides a total count of observations and a sum of all observed values, it calculates configurable quantiles over a sliding time window.
+* In Prometheus terms, an endpoint you can scrape is called an instance, usually corresponding to a single process. A collection of instances with the same purpose, a process replicated for scalability or reliability for example, is called a job.
+* When Prometheus scrapes a target, it attaches some labels automatically to the scraped time series which serve to identify the scraped target: job and instance.
+* Prometheus supports two types of rules which may be configured and then evaluated at regular intervals: recording rules and alerting rules. To include rules in Prometheus, create a file containing the necessary rule statements and have Prometheus load the file via the rule_files field in the Prometheus configuration. Rule files use YAML.
+* You can use promtool to test your rules.
+  * ./promtool test rules test.yml
+* Prometheus supports basic authentication and TLS. This is experimental and might change in the future.
+* In Prometheus's expression language, an expression or sub-expression can evaluate to one of four types:
+  * Instant vector - a set of time series containing a single sample for each time series, all sharing the same timestamp
+  * Range vector - a set of time series containing a range of data points over time for each time series
+  * Scalar - a simple numeric floating point value
+  * String - a simple string value; currently unused
+* Strings may be specified as literals in single quotes, double quotes or backticks.
+* The offset modifier always needs to follow the selector immediately
+* The @ modifier allows changing the evaluation time for individual instant and range vectors in a query. The time supplied to the @ modifier is a unix timestamp and described with a float literal.
+* Prometheus supports the following built-in aggregation operators that can be used to aggregate the elements of a single instant vector, resulting in a new vector of fewer elements with aggregated values:
+  * sum (calculate sum over dimensions)
+  * min (select minimum over dimensions)
+  * max (select maximum over dimensions)
+  * avg (calculate the average over dimensions)
+  * group (all values in the resulting vector are 1)
+  * stddev (calculate population standard deviation over dimensions)
+  * stdvar (calculate population standard variance over dimensions)
+  * count (count number of elements in the vector)
+  * count_values (count number of elements with the same value)
+  * bottomk (smallest k elements by sample value)
+  * topk (largest k elements by sample value)
+  * quantile (calculate φ-quantile (0 ≤ φ ≤ 1) over dimensions)
+* Metrics have a TYPE and HELP attribute.
+  * TYPE– Specifies what type of metric(counter, gauge, histogram, summary).
+  * HELP – description of what the metric is.
+* Metric name is just another label.
+* Labels surrounded by __ are considered internal to prometheus.
+* Every metric is assigned 2 labels by default(instance and job).
+* A PromQL expression can evaluate to one of four types:
+  * String – a simple string value (currently unused) 
+  * Scalar – a simple numeric floating point value
+  * Instant Vector – set of time series containing a single sample for each time series, all sharing the same timestamp.
+  * Range Vector – set of time series containing a data points over time for each time series.
+* PromQL has 3 logical operators: or and unless.
+* Ignoring keyword can be used to “ignore” labels to ensure there is a match between 2 vectors.
+* Ignoring keyword is used to ignore a label when matching, the on keyword is to specify exact list of labels to match on.
+* Resulting vector will have matching elements with all labels listed in “on” or all labels NOT listed in “ignoring”.
+* group_left tells PromQL that elements from the right side are now matched with multiple elements from the left.
+* The by clause allows you to choose which labels to aggregate along.
+* The without keyword does the opposite of by and tells the query which labels not to include in the aggregation.
+* rate
+  * Looks at the first and last data points within a range.
+  * Effectively an average rate over the range.
+  * Best used for slow moving counter and alerting rules.
+* irate
+  * Looks at the last two data points
+within a ranged
+  * Instant rate
+  * Should be used for graphing volatile,
+fast-moving counters.
+* Quantiles - determine how many values in a distribution are above or below a certain limit.
+* Histogram quantiles can be used to accurately measure if a specific SLO is being met and can be used to generate alerts if a SLO is exceeded.
+  * histogram_quantile(0.95, request_latency_seconds_bucket)
+* Each histogram bucket is stored as a separate time series, so having too
+many buckets will results:
+  * High Cardinality
+  * High Ram usage
+  * High disk space
+  * Slower performance for inserts in Prometheus database
+* Histogram
+  * Bucket sizes can be picked
+  * Less taxing on client libraries
+  * Any quantile can be selected
+  * Prometheus server must calculate quantiles 
+* Summary
+  * Quantile must be defined ahead of time
+  * More taxing on client libraries
+  * Only quantiles predefined in client can be used
+  * Very minimal server-side cost
+* Recording Rules allow Prometheus to periodically evaluate PromQL expression and store the resulting times series generated by them.
+* Recording rules go in a sperate file called a rule files.
+* Console templates allow you to create your own custom html pages using Go templating language.
+* Metrics should follow snake_case – lowercase with words separated by _
+* The first word of the metric should be the application/library the metric is used for.
+* The name portion of the metric name should provide a description of what the metric is used for. More than one word can be used.
+* The unit should always be included in the metric name, so there’s no second guessing which units its using.
+* Make sure to use unprefixed base units like seconds and bytes, and meters. We don’t want to use microseconds or kilobytes.
+* Re-labeling – allows you to classify/filter Prometheus targets and metrics by rewriting their label set.
+* To change the delimiter between labels use the separator property.
+* Target labels - are labels that are added to the labels of every time series returned from a scrape.
+* Metrics can be pushed to the Pushgateway using one of the following methods:
+  * Send HTTP Requests to Pushgateway
+  * Prometheus Client Libraries
+* The for clause tells Prometheus that an expression must evaluate to true for a specified period of time before firing alert.
+* Alert states:
+  * Inactive – Expression has not returned any results
+  * Pending – expression returned results but it hasn’t been long enough to be considered firing(5m in this case)
+  * Firing – Active for more than the defined for clause(5m in this case)
+* Labels can be added to alerts to provide a mechanism to classify and match specific alerts in Alertmanager.
+* Annotations can be used to provide additional information, however unlike labels they do no play a part in the alerts identity. So they cannot be use for routing in Alertmanager.
+* Alertmanager is responsible for receiving alerts generated from Prometheus and converting them into notifications. These notifications can include, pages,
+webhooks, email messages, and chat messages.
+* Alerts can be silenced to prevent generating notifications for a period of time.
+* 
