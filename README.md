@@ -251,4 +251,3 @@ many buckets will results:
 * Alertmanager is responsible for receiving alerts generated from Prometheus and converting them into notifications. These notifications can include, pages,
 webhooks, email messages, and chat messages.
 * Alerts can be silenced to prevent generating notifications for a period of time.
-* 
