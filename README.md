@@ -251,3 +251,22 @@ many buckets will results:
 * Alertmanager is responsible for receiving alerts generated from Prometheus and converting them into notifications. These notifications can include, pages,
 webhooks, email messages, and chat messages.
 * Alerts can be silenced to prevent generating notifications for a period of time.
+* The API response format is JSON. Every successful API request returns a 2xx status code.
+* Invalid requests that reach the API handlers return a JSON error object and one of the following HTTP response codes:
+  * 400 Bad Request when parameters are missing or incorrect.
+  * 422 Unprocessable Entity when an expression can't be executed (RFC4918).
+  * 503 Service Unavailable when queries time out or abort.
+* Instant queries - URL query parameters:
+  * query=<string>: Prometheus expression query string.
+  * time=<rfc3339 | unix_timestamp>: Evaluation timestamp. Optional.
+  * timeout=<duration>: Evaluation timeout. Optional. Defaults to and is capped by the value of the -query.timeout flag.
+* Range Queries URL query parameters:
+  * query=<string>: Prometheus expression query string.
+  * start=<rfc3339 | unix_timestamp>: Start timestamp, inclusive.
+  * end=<rfc3339 | unix_timestamp>: End timestamp, inclusive.
+  * step=<duration | float>: Query resolution step width in duration format or float number of seconds.
+  * timeout=<duration>: Evaluation timeout. Optional. Defaults to and is capped by the value of the -query.timeout flag.
+* Finding series by label matchers URL query parameters:
+  * match[]=<series_selector>: Repeated series selector argument that selects the series to return. At least one match[] argument must be provided.
+  * start=<rfc3339 | unix_timestamp>: Start timestamp.
+  * end=<rfc3339 | unix_timestamp>: End timestamp.
