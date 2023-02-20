@@ -270,3 +270,13 @@ webhooks, email messages, and chat messages.
   * match[]=<series_selector>: Repeated series selector argument that selects the series to return. At least one match[] argument must be provided.
   * start=<rfc3339 | unix_timestamp>: Start timestamp.
   * end=<rfc3339 | unix_timestamp>: End timestamp.
+* We have found the following guidelines very effective:
+  * Have no more than 5 graphs on a console.
+  * Have no more than 5 plots (lines) on each graph. You can get away with more if it is a stacked/area graph.
+  * When using the provided console template examples, avoid more than 20-30 entries in the right-hand-side table.
+* Keep alerting simple, alert on symptoms, have good consoles to allow pinpointing causes, and avoid having pages where there is nothing to do. Aim to have as few alerts as possible, by alerting on symptoms that are associated with end-user pain rather than trying to catch every possible way that pain could be caused. Alerts should link to relevant consoles and make it easy to figure out which component is at fault.
+* We only recommend using the Pushgateway in certain limited cases. There are several pitfalls when blindly using the Pushgateway instead of Prometheus's usual pull model for general metrics collection:
+  * When monitoring multiple instances through a single Pushgateway, the Pushgateway becomes both a single point of failure and a potential bottleneck.
+  * You lose Prometheus's automatic instance health monitoring via the up metric (generated on every scrape).
+  * The Pushgateway never forgets series pushed to it and will expose them to Prometheus forever unless those series are manually deleted via the Pushgateway's API. 
+* Usually, the only valid use case for the Pushgateway is for capturing the outcome of a service-level batch job. 
