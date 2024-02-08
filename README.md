@@ -40,7 +40,7 @@
 * promtool is the cli utility for performing config validation. The `check config` subcommands perform validation of the passed in the configuration.
 * Traces allow you to follow operations as they traverse through various systems & services, allowing you to follow a request hop by hop through a system.
 * The range vector selector `[5m]` will return all values for a metric over the past 5 minutes, so it returns a range vector.
-* To match on any mountpoint starting with /run a regular expression /run.* must be used. 
+* To match on any mountpoint starting with /run a regular expression /run.* must be used.
 * Since Prometheus follows a pull-based model, this makes gathering metrics from short-lived jobs difficult. The push gateway allows short-lived jobs to push metrics to the push gateway, and the Prometheus server can scrape the push gateway.
 * rate() calculates average rate over entire interval, irate() calculates the rate only between the last two datapoints in an interval.
 * for attribute in a Prometheus alert rule determines how long a rule must be true before firing an alarm.
@@ -187,7 +187,7 @@ Gauges are typically used for measured values like temperatures or current memor
 * Labels surrounded by __ are considered internal to prometheus.
 * Every metric is assigned 2 labels by default(instance and job).
 * A PromQL expression can evaluate to one of four types:
-  * String – a simple string value (currently unused) 
+  * String – a simple string value (currently unused)
   * Scalar – a simple numeric floating point value
   * Instant Vector – set of time series containing a single sample for each time series, all sharing the same timestamp.
   * Range Vector – set of time series containing a data points over time for each time series.
@@ -221,7 +221,7 @@ many buckets will results:
   * Bucket sizes can be picked
   * Less taxing on client libraries
   * Any quantile can be selected
-  * Prometheus server must calculate quantiles 
+  * Prometheus server must calculate quantiles
 * Summary
   * Quantile must be defined ahead of time
   * More taxing on client libraries
@@ -278,5 +278,15 @@ webhooks, email messages, and chat messages.
 * We only recommend using the Pushgateway in certain limited cases. There are several pitfalls when blindly using the Pushgateway instead of Prometheus's usual pull model for general metrics collection:
   * When monitoring multiple instances through a single Pushgateway, the Pushgateway becomes both a single point of failure and a potential bottleneck.
   * You lose Prometheus's automatic instance health monitoring via the up metric (generated on every scrape).
-  * The Pushgateway never forgets series pushed to it and will expose them to Prometheus forever unless those series are manually deleted via the Pushgateway's API. 
-* Usually, the only valid use case for the Pushgateway is for capturing the outcome of a service-level batch job. 
+  * The Pushgateway never forgets series pushed to it and will expose them to Prometheus forever unless those series are manually deleted via the Pushgateway's API.
+* Usually, the only valid use case for the Pushgateway is for capturing the outcome of a service-level batch job.
+* For long term metrics, Prometheus uses `--remote_write` option.
+* **Federation** in Prometheus is a method to scale and manage large-scale monitoring environments horizontally.
+* **Inhibition** is a concept of suppressing notifications for certain alerts if certain other alerts are already firing.
+* **Offset**
+  * `rate(api_http_requests_total[5m] offset 1w)` - to query for the API request rate from a week ago:
+  * `rate(api_http_requests_total[5m] offset 1w) - rate(api_http_requests_total[5m])` -  calculate the difference between the current request rate and the rate from last week.
+* `example_metric{job="example_job"} @ 1644205200` - This tells Prometheus to only return the value of example_metric at the specified epoch time, in this case, 1644205200.
+* Single target Exporter examples.
+* sum vs sum_over_time.
+* avg vs avg_over_time.
